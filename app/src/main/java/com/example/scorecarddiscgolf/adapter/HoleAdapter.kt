@@ -39,7 +39,7 @@ class HoleAdapter(private val holeViewModels: List<HoleViewModel>) :
                         // Show an error message to the user for invalid numeric input
                         Toast.makeText(
                             v?.context,
-                            "Please enter a valid number",
+                            "Please enter a valid number ",
                             Toast.LENGTH_SHORT
                         ).show()
                     }
