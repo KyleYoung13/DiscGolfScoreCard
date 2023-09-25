@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">ScoreCardDiscGolf</string>
+    <item name="score_edit_text" type="id">string</item>
+</resources>
