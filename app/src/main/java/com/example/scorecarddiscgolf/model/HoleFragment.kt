@@ -25,7 +25,13 @@ class HoleFragment : Fragment() {
             inflater, R.layout.fragment_hole, container, false
         )
 
-        viewModel = ViewModelProvider(this).get(HoleViewModel::class.java)
+        // Get player name, hole number, and score from your data source or preferences
+        val playerName = "John" // Replace with the actual player name
+        val holeNumber = 1 // Replace with the actual hole number
+        val score = "0" // Replace with the actual initial score
+
+        // Create a HoleViewModel instance with constructor arguments
+        val viewModel = HoleViewModel(playerName, holeNumber, score)
 
         // Set the ViewModel in the binding
         binding.holeViewModel = viewModel
@@ -37,8 +43,7 @@ class HoleFragment : Fragment() {
         binding.saveButton.setOnClickListener {
             val scoreText = binding.scoreEditText.text.toString()
             if (scoreText.isNotEmpty()) {
-                val score = scoreText.toInt()
-                viewModel.updateScore(score)
+                viewModel.updateScore(scoreText)
             }
         }
 
