@@ -11,7 +11,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val holeFragment = HoleFragment()
-        supportFragmentManager.beginTransaction().replace(R.id.fragment_container, holeFragment).commit()
+        val mainFragment = MainFragment()
+        supportFragmentManager.beginTransaction().replace(R.id.fragment_container, mainFragment).commit()
         }
     }
