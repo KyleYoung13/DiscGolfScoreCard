@@ -31,7 +31,7 @@ class HoleFragment : Fragment() {
         val score = "0" // Replace with the actual initial score
 
         // Create a HoleViewModel instance with constructor arguments
-        val viewModel = HoleViewModel(playerName, holeNumber, score)
+        viewModel = HoleViewModel(playerName, holeNumber, score)
 
         // Set the ViewModel in the binding
         binding.holeViewModel = viewModel
