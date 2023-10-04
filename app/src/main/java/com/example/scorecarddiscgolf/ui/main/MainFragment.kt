@@ -61,7 +61,7 @@ class MainFragment : Fragment() {
             if (numberOfHolesText.isNotEmpty()) {
                 val numberOfHoles = numberOfHolesText.toInt()
                 saveNumberOfHoles(numberOfHoles)
-                // TODO: Navigate to the scorecard or perform other actions as needed
+                // TODO: Navigate to the HOLEFRAGMENT or perform other actions as needed
             }
         }
 
