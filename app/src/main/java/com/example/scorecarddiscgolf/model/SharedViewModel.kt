@@ -13,9 +13,14 @@ class SharedViewModel : ViewModel() {
     private val _currentHole = MutableLiveData<Int>()
     val currentHole: LiveData<Int> get() = _currentHole
 
-    init {
-        // Initialize shared data (players list and current hole) here if needed.
+    fun addPlayer(player: Player) {
+        val currentPlayers = _players.value?.toMutableList() ?: mutableListOf()
+        currentPlayers.add(player)
+        _players.value = currentPlayers
     }
 
-    // Add functions to update shared data, if required.
+    fun updateCurrentHole(newHoleNumber: Int) {
+        _currentHole.value = newHoleNumber
+    }
 }
+

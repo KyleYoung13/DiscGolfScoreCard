@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -17,12 +18,14 @@ import com.example.scorecarddiscgolf.adapter.PlayersAdapter
 import com.example.scorecarddiscgolf.data.Player
 import com.example.scorecarddiscgolf.model.HoleFragment
 import com.example.scorecarddiscgolf.model.ScoreCardViewModel
+import com.example.scorecarddiscgolf.model.SharedViewModel
 
 class MainFragment : Fragment() {
 
 
     private lateinit var viewModel: ScoreCardViewModel
     private val playersList = mutableListOf<Player>()
+    private val sharedViewModel: SharedViewModel by activityViewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,8 +54,7 @@ class MainFragment : Fragment() {
             val playerName = playerNameEditText.text.toString()
             if (playerName.isNotEmpty()) {
                 val player = Player(playerName, 0)
-                playersList.add(player)
-                playersAdapter.notifyDataSetChanged()
+                sharedViewModel.addPlayer(player)
                 // Clear the EditText after adding a player
                 playerNameEditText.text.clear()
             }
@@ -62,13 +64,7 @@ class MainFragment : Fragment() {
             val numberOfHolesText = numberOfHolesEditText.text.toString()
             if (numberOfHolesText.isNotEmpty()) {
                 val numberOfHoles = numberOfHolesText.toInt()
-                saveNumberOfHoles(numberOfHoles)
-
-                // Create a new instance of HoleFragment and set the hole number as an argument
-                val holeFragment = HoleFragment()
-                val args = Bundle()
-                args.putInt("holeNumber", numberOfHoles)
-                holeFragment.arguments = args
+                sharedViewModel.updateCurrentHole(numberOfHoles) // Use shared ViewModel to update the hole number
                 // TODO: Navigate to the HOLEFRAGMENT or perform other actions as needed
                 findNavController().navigate(R.id.action_mainFragment_to_holeFragment)
             }
@@ -85,11 +81,6 @@ class MainFragment : Fragment() {
         editor.apply()
     }
 
-    private fun getNumberOfHoles(): Int {
-        val sharedPreferences =
-            requireContext().getSharedPreferences("app_prefs", Context.MODE_PRIVATE)
-        return sharedPreferences.getInt("number_of_holes", 0) // 0 is the default value
-    }
 
 
 }

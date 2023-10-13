@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import com.example.scorecarddiscgolf.R
 import com.example.scorecarddiscgolf.adapter.PlayersAdapter
 import com.example.scorecarddiscgolf.databinding.FragmentHoleBinding
@@ -20,7 +21,8 @@ class HoleFragment : Fragment() {
 
     private lateinit var viewModel: HoleViewModel
     private lateinit var playersAdapter: PlayersAdapter
-    private lateinit var sharedViewModel: SharedViewModel
+    val sharedViewModel: SharedViewModel by activityViewModels()
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -36,11 +38,11 @@ class HoleFragment : Fragment() {
         val playerName = "John" // Replace with the actual player name
         val score = "0" // Replace with the actual initial score
 
-        val holeNumberTextView = view?.findViewById<TextView>(R.id.hole_number_text_view)
+        val holeNumberTextView = view?.findViewById<TextView>(R.id.holeNumberTextView)
         holeNumberTextView?.text = "Hole: $holeNumber"
 
 
-        // Create a HoleViewModel instance with constructor arguments
+        // Create a HoleViewModel instance with constructor arguments18
         viewModel = HoleViewModel(playerName, holeNumber, score)
 
         // Set the ViewModel in the binding
