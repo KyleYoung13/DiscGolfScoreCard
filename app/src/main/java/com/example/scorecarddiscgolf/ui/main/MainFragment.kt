@@ -9,11 +9,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.scorecarddiscgolf.R
 import com.example.scorecarddiscgolf.adapter.PlayersAdapter
 import com.example.scorecarddiscgolf.data.Player
+import com.example.scorecarddiscgolf.model.HoleFragment
 import com.example.scorecarddiscgolf.model.ScoreCardViewModel
 
 class MainFragment : Fragment() {
@@ -55,13 +57,20 @@ class MainFragment : Fragment() {
                 playerNameEditText.text.clear()
             }
         }
-            // Handle the "Continue" button click event
+        // Handle the "Continue" button click event
         continueButton.setOnClickListener {
             val numberOfHolesText = numberOfHolesEditText.text.toString()
             if (numberOfHolesText.isNotEmpty()) {
                 val numberOfHoles = numberOfHolesText.toInt()
                 saveNumberOfHoles(numberOfHoles)
+
+                // Create a new instance of HoleFragment and set the hole number as an argument
+                val holeFragment = HoleFragment()
+                val args = Bundle()
+                args.putInt("holeNumber", numberOfHoles)
+                holeFragment.arguments = args
                 // TODO: Navigate to the HOLEFRAGMENT or perform other actions as needed
+                findNavController().navigate(R.id.action_mainFragment_to_holeFragment)
             }
         }
 
@@ -69,16 +78,18 @@ class MainFragment : Fragment() {
     }
 
     private fun saveNumberOfHoles(numberOfHoles: Int) {
-        val sharedPreferences = requireContext().getSharedPreferences("app_prefs", Context.MODE_PRIVATE)
+        val sharedPreferences =
+            requireContext().getSharedPreferences("app_prefs", Context.MODE_PRIVATE)
         val editor = sharedPreferences.edit()
         editor.putInt("number_of_holes", numberOfHoles)
         editor.apply()
     }
+
     private fun getNumberOfHoles(): Int {
-        val sharedPreferences = requireContext().getSharedPreferences("app_prefs", Context.MODE_PRIVATE)
+        val sharedPreferences =
+            requireContext().getSharedPreferences("app_prefs", Context.MODE_PRIVATE)
         return sharedPreferences.getInt("number_of_holes", 0) // 0 is the default value
     }
-
 
 
 }

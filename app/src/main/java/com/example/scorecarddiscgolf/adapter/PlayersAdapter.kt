@@ -11,8 +11,13 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.scorecarddiscgolf.R
 import com.example.scorecarddiscgolf.data.Player
 
-class PlayersAdapter(private val players: List<Player>) :
+class PlayersAdapter(private var players: List<Player>) :
     RecyclerView.Adapter<PlayersAdapter.PlayerViewHolder>() {
+
+    fun updatePlayers(newPlayers:List<Player>){
+        players = newPlayers
+        notifyDataSetChanged()
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PlayerViewHolder {
         val view = LayoutInflater.from(parent.context)
