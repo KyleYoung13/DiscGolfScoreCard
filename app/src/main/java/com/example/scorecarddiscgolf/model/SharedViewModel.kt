@@ -8,7 +8,7 @@ import com.example.scorecarddiscgolf.data.Player
 
 class SharedViewModel : ViewModel() {
     private val _players = MutableLiveData<List<Player>>()
-    val players: LiveData<List<Player>> get() = _players
+    val players: MutableLiveData<List<Player>> get() = _players
 
     private val _currentHole = MutableLiveData<Int>()
     val currentHole: LiveData<Int> get() = _currentHole
@@ -22,5 +22,11 @@ class SharedViewModel : ViewModel() {
     fun updateCurrentHole(newHoleNumber: Int) {
         _currentHole.value = newHoleNumber
     }
+
+    fun getHoleNumber(): Int? {
+        return currentHole.value
+    }
+
+
 }
 

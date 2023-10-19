@@ -3,4 +3,5 @@
     <string name="save">Save</string>
     <string name="hole_number">Hole Number</string>
     <string name="score">Score</string>
+    <string name="hole_1">Hole: 1</string>
 </resources>

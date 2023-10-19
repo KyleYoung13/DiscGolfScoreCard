@@ -13,7 +13,6 @@ class HoleViewModel(private val playerName: String, private var holeNumber: Int,
 
     private var totalScore: Int = 0
     private val playersList = mutableListOf<Player>()
-    val playersAdapter: PlayersAdapter = PlayersAdapter(emptyList())
     private val _playersLiveData = MutableLiveData<List<Player>>()
     val playersLiveData: LiveData<List<Player>> get() = _playersLiveData
 

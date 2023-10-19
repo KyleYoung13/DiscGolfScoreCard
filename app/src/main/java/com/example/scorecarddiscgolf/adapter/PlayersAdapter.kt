@@ -7,17 +7,14 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.TextView
+import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.RecyclerView
 import com.example.scorecarddiscgolf.R
 import com.example.scorecarddiscgolf.data.Player
 
-class PlayersAdapter(private var players: List<Player>) :
+class PlayersAdapter(private var playersLiveData: MutableLiveData<List<Player>>) :
     RecyclerView.Adapter<PlayersAdapter.PlayerViewHolder>() {
 
-    fun updatePlayers(newPlayers:List<Player>){
-        players = newPlayers
-        notifyDataSetChanged()
-    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PlayerViewHolder {
         val view = LayoutInflater.from(parent.context)
@@ -26,11 +23,16 @@ class PlayersAdapter(private var players: List<Player>) :
     }
 
     override fun onBindViewHolder(holder: PlayerViewHolder, position: Int) {
-        val player = players[position]
-        holder.bind(player)
+        val players = playersLiveData.value ?: emptyList()
+        if (position < players.size) {
+            val player = players[position]
+            holder.bind(player)
+        }
     }
 
-    override fun getItemCount(): Int = players.size
+    override fun getItemCount(): Int {
+        return playersLiveData.value?.size ?: 0
+    }
 
     class PlayerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val playerNameTextView: TextView = itemView.findViewById(R.id.player_name_text_view)
