@@ -8,13 +8,14 @@ import com.example.scorecarddiscgolf.data.Player
 
 
 
-class HoleViewModel(private val playerName: String, private var holeNumber: Int,
+class HoleViewModel(private var holeNumber: Int,
                     private var score: String,) : ViewModel() {
 
     private var totalScore: Int = 0
     private val playersList = mutableListOf<Player>()
     private val _playersLiveData = MutableLiveData<List<Player>>()
     val playersLiveData: LiveData<List<Player>> get() = _playersLiveData
+    val playersAdapter: PlayersAdapter = PlayersAdapter(playersLiveData)
 
     init {
         _playersLiveData.value = playersList
@@ -40,10 +41,6 @@ class HoleViewModel(private val playerName: String, private var holeNumber: Int,
 
     fun getTotalScore(): String{
         return score
-    }
-
-    fun getPlayerName(): String {
-        return playerName
     }
 
     fun getHoleNumber(): Int {

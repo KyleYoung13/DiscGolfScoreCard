@@ -21,7 +21,7 @@ class HoleFragment : Fragment() {
     private lateinit var viewModel: HoleViewModel
     private lateinit var playersAdapter: PlayersAdapter
     private lateinit var binding: FragmentHoleBinding
-    val sharedViewModel: SharedViewModel by activityViewModels()
+    private val sharedViewModel: SharedViewModel by activityViewModels()
     private var holeNumbers = 1
 
 
@@ -43,7 +43,6 @@ class HoleFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         // Get player name, hole number, and score from your data source or preferences
-        val playerName = "John" // Replace with the actual player name
         val score = "0" // Replace with the actual initial score
         var holeNumber = sharedViewModel.getHoleNumber()
 
@@ -51,12 +50,13 @@ class HoleFragment : Fragment() {
             "Hole: $holeNumbers" // Retrieve the hole number using sharedViewModel
 
         // Create a HoleViewModel instance with constructor arguments
-        viewModel = HoleViewModel(playerName, holeNumber!!, score)
+        viewModel = HoleViewModel(holeNumber!!, score)
 
         // Set the ViewModel in the binding
         binding.holeViewModel = viewModel
 
-        playersAdapter = PlayersAdapter(sharedViewModel.players)
+        playersAdapter = PlayersAdapter(viewModel.playersLiveData)
+        binding.playersRecyclerView.adapter = playersAdapter
 
         // Set the lifecycle owner for LiveData to work with data binding
         binding.lifecycleOwner = viewLifecycleOwner
@@ -78,17 +78,12 @@ class HoleFragment : Fragment() {
             else{
                 Toast.makeText(context, "Game over", Toast.LENGTH_SHORT).show()
             }
+
+            sharedViewModel.players.observe(viewLifecycleOwner){players ->
+                playersAdapter.players = players
+                playersAdapter.notifyDataSetChanged()
+            }
         }
 
-        sharedViewModel.players.observe(viewLifecycleOwner) { player ->
-            //update recyclerview with new list of players
-            playersAdapter.notifyDataSetChanged()
-
-        }
-        sharedViewModel.currentHole.observe(viewLifecycleOwner) { holeNumber ->
-            Log.d("HoleFragment", "Received hole number: $holeNumber")
-            Log.d("HoleFragment", "Hole number: $holeNumber")
-
-        }
     }
 }

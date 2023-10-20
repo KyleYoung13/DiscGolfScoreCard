@@ -10,7 +10,6 @@ import android.widget.Button
 import android.widget.EditText
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -29,6 +28,8 @@ class MainFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         val view = inflater.inflate(R.layout.fragment_main, container, false)
+
+        playersList = sharedViewModel.players
 
         val playerNameEditText = view.findViewById<EditText>(R.id.player_name_edit_text)
         val addPlayerButton = view.findViewById<Button>(R.id.add_player_button)

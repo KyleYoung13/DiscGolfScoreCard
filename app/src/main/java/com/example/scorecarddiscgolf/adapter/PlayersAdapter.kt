@@ -7,13 +7,23 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.TextView
-import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.LiveData
 import androidx.recyclerview.widget.RecyclerView
 import com.example.scorecarddiscgolf.R
 import com.example.scorecarddiscgolf.data.Player
 
-class PlayersAdapter(private var playersLiveData: MutableLiveData<List<Player>>) :
+class PlayersAdapter(private var playersLiveData: LiveData<List<Player>>) :
     RecyclerView.Adapter<PlayersAdapter.PlayerViewHolder>() {
+
+    // Create a reference to the current list of players
+    var players: List<Player> = emptyList()
+
+    init {
+        playersLiveData.observeForever { updatedPlayers ->
+            players = updatedPlayers
+            notifyDataSetChanged() // Notify the adapter that the data has changed
+        }
+    }
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PlayerViewHolder {
