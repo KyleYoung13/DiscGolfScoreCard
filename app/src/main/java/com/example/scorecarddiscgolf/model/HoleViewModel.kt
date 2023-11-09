@@ -8,10 +8,11 @@ import com.example.scorecarddiscgolf.data.Player
 
 
 
-class HoleViewModel(private var holeNumber: Int,
-                    private var score: String,) : ViewModel() {
+class HoleViewModel: ViewModel() {
 
     private var totalScore: Int = 0
+    private var score: String = ""
+    private var holeNumber: Int = 0
     private val playersList = mutableListOf<Player>()
     private val _playersLiveData = MutableLiveData<List<Player>>()
     val playersLiveData: LiveData<List<Player>> get() = _playersLiveData

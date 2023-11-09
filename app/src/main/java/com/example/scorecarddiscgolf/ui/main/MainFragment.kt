@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
 import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.MutableLiveData
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -16,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.scorecarddiscgolf.R
 import com.example.scorecarddiscgolf.adapter.PlayersAdapter
 import com.example.scorecarddiscgolf.data.Player
+import com.example.scorecarddiscgolf.model.HoleViewModel
 import com.example.scorecarddiscgolf.model.SharedViewModel
 
 class MainFragment : Fragment() {

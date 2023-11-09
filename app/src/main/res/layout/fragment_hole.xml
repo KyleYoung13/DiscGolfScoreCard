@@ -15,13 +15,13 @@
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/players_recycler_view"
-            android:layout_width="174dp"
-            android:layout_height="115dp"
-            android:layout_marginTop="16dp"
+            android:layout_width="406dp"
+            android:layout_height="329dp"
+            android:layout_marginTop="200dp"
             app:adapter="@{holeViewModel.playersAdapter}"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.025"
+            app:layout_constraintHorizontal_bias="0.4"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/holeNumberTextView" />
 
