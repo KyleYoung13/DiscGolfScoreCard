@@ -10,8 +10,9 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.scorecarddiscgolf.R
 import com.example.scorecarddiscgolf.adapter.PlayersAdapter
 import com.example.scorecarddiscgolf.data.Player
@@ -21,6 +22,7 @@ import com.example.scorecarddiscgolf.databinding.FragmentHoleBinding
 class HoleFragment : Fragment() {
 
     private lateinit var playersAdapter: PlayersAdapter
+    private lateinit var playersList: MutableLiveData<List<Player>>
     private lateinit var binding: FragmentHoleBinding
     private val sharedViewModel: SharedViewModel by activityViewModels()
     private val holeViewModel: HoleViewModel by viewModels()
@@ -36,12 +38,7 @@ class HoleFragment : Fragment() {
         binding = DataBindingUtil.inflate(
             inflater, R.layout.fragment_hole, container, false
         )
-        playersAdapter = PlayersAdapter(sharedViewModel.players)
-        binding.playersRecyclerView.adapter = playersAdapter
 
-        binding.holeViewModel = holeViewModel
-        //Create ViewModelProvider for HoleViewModel
-        holeViewModel == ViewModelProvider(this).get(HoleViewModel::class.java)
 
         // Return the root view from the binding
         return binding.root
@@ -51,10 +48,16 @@ class HoleFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
 
-        holeViewModel.playersLiveData.observe(viewLifecycleOwner) { players ->
-            playersAdapter.players = players
-            playersAdapter.notifyDataSetChanged()
+        binding.holeViewModel = holeViewModel
+
+        //
+        val holeObserver = Observer<List<Player>>{ players ->
+            binding.playersRecyclerView.adapter = PlayersAdapter(players)
+            binding.playersRecyclerView.layoutManager = LinearLayoutManager(context)
         }
+
+        sharedViewModel.players.observe(viewLifecycleOwner, holeObserver)
+
 
         // Get player name, hole number, and score from your data source or preferences
         var holeNumber = sharedViewModel.getHoleNumber()
@@ -62,8 +65,7 @@ class HoleFragment : Fragment() {
         binding.holeNumberTextView?.text =
             "Hole: $holeNumbers" // Retrieve the hole number using sharedViewModel
 
-        // Set the ViewModel in the binding
-        binding.holeViewModel = holeViewModel
+
 
         // Set the lifecycle owner for LiveData to work with data binding
         binding.lifecycleOwner = viewLifecycleOwner
@@ -89,3 +91,4 @@ class HoleFragment : Fragment() {
 
     }
 }
+

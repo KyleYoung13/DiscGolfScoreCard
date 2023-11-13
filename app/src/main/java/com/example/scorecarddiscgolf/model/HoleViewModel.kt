@@ -22,11 +22,6 @@ class HoleViewModel: ViewModel() {
         _playersLiveData.value = playersList
     }
 
-    fun addPlayer(player: Player){
-        playersList.add(player)
-        _playersLiveData.value = playersList
-    }
-
 
     fun updateScore(newScore: String) {
         score = newScore
@@ -40,9 +35,6 @@ class HoleViewModel: ViewModel() {
         score = newScore
     }
 
-    fun getTotalScore(): String{
-        return score
-    }
 
     fun getHoleNumber(): Int {
         return holeNumber

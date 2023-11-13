@@ -12,19 +12,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.scorecarddiscgolf.R
 import com.example.scorecarddiscgolf.data.Player
 
-class PlayersAdapter(private var playersLiveData: LiveData<List<Player>>) :
+class PlayersAdapter(private var playersLiveData: List<Player>) :
     RecyclerView.Adapter<PlayersAdapter.PlayerViewHolder>() {
 
     // Create a reference to the current list of players
     var players: List<Player> = emptyList()
-
-    init {
-        playersLiveData.observeForever { updatedPlayers ->
-            players = updatedPlayers
-            notifyDataSetChanged() // Notify the adapter that the data has changed
-        }
-    }
-
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PlayerViewHolder {
         val view = LayoutInflater.from(parent.context)
@@ -33,7 +25,6 @@ class PlayersAdapter(private var playersLiveData: LiveData<List<Player>>) :
     }
 
     override fun onBindViewHolder(holder: PlayerViewHolder, position: Int) {
-        val players = playersLiveData.value ?: emptyList()
         if (position < players.size) {
             val player = players[position]
             holder.bind(player)
@@ -41,7 +32,7 @@ class PlayersAdapter(private var playersLiveData: LiveData<List<Player>>) :
     }
 
     override fun getItemCount(): Int {
-        return playersLiveData.value?.size ?: 0
+        return playersLiveData.size
     }
 
     class PlayerViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {

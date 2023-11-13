@@ -18,7 +18,6 @@ class HoleItemView(parent: ViewGroup) : RecyclerView.ViewHolder(
 
     fun bind(holeViewModel: HoleViewModel) {
         holeNumberTextView.text = holeViewModel.getHoleNumber().toString() // 1-36
-        playerScoreTextView.text = holeViewModel.getScore().toString()
-        totalScoreTextView.text = holeViewModel.getTotalScore().toString()
+        playerScoreTextView.text = holeViewModel.getScore()
     }
 }

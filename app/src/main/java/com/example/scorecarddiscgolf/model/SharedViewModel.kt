@@ -1,6 +1,7 @@
 package com.example.scorecarddiscgolf.model
 
 // SharedViewModel.kt
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -17,6 +18,7 @@ class SharedViewModel : ViewModel() {
         val currentPlayers = _players.value?.toMutableList() ?: mutableListOf()
         currentPlayers.add(player)
         _players.value = currentPlayers
+        Log.d("SharedViewModel", "Player added: $player")
     }
 
     fun updateCurrentHole(newHoleNumber: Int) {
@@ -26,6 +28,9 @@ class SharedViewModel : ViewModel() {
     fun getHoleNumber(): Int? {
         return currentHole.value
     }
+
+
+
 
 
 }
